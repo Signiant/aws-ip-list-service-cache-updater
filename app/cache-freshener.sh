@@ -17,7 +17,9 @@ do
   for ENDPOINT in $ENDPOINTS
   do
     echo "processing endpoint ${ENDPOINT}"
-    curl -s -w "\nTimings: connect:%{time_connect} starttransfer:%{time_starttransfer} total:%{time_total}\n" ${LINKED_CONTAINER_NAME}:${PORT}/${ENDPOINT}
+    # curl -s -w "\nTimings: connect:%{time_connect} starttransfer:%{time_starttransfer} total:%{time_total}\n" ${LINKED_CONTAINER_NAME}:${PORT}/${ENDPOINT}
+    curl -s ${LINKED_CONTAINER_NAME}:${PORT}/${ENDPOINT} > /json/${ENDPOINT}.tmp
+    mv /json/${ENDPOINT}.tmp /json/${ENDPOINT}.json
   done
 
   sleep 30

@@ -9,6 +9,8 @@ RUN mkdir -p /app
 
 WORKDIR /app
 
+VOLUME /json
+
 COPY app/* ./
 RUN chmod a+x *
 
