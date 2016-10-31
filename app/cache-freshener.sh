@@ -9,6 +9,9 @@ echo "Connecting to the IP list service on port ${PORT}"
 # Get the list of endpoints
 ENDPOINTS=$(curl -s ${LINKED_CONTAINER_NAME}:${PORT} | grep li |awk -F '[<>]' '{print $5}')
 
+# write the base html file
+curl -s ${LINKED_CONTAINER_NAME}:${PORT} > /json/index.html
+
 # Loop forever, sleeping for our frequency
 while true
 do
