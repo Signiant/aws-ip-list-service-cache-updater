@@ -10,7 +10,7 @@ echo "Connecting to the IP list service on port ${PORT}"
 ENDPOINTS=$(curl -s ${LINKED_CONTAINER_NAME}:${PORT} | grep li |awk -F '[<>]' '{print $5}')
 
 # write the base html file
-curl -s ${LINKED_CONTAINER_NAME}:${PORT} > /json/index.html
+curl -s ${LINKED_CONTAINER_NAME}:${PORT} | sed -e 's/">/\.json">/g' > /json/index.html
 
 # Loop forever, sleeping for our frequency
 while true
