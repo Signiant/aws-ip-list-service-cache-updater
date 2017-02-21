@@ -10,9 +10,10 @@ echo "Connecting to the IP list service on port ${PORT}"
 ENDPOINTS=$(curl -s ${LINKED_CONTAINER_NAME}:${PORT} | grep li |awk -F '[<>]' '{print $5}')
 echo "Retrieved endpoints: ${ENDPOINTS}"
 
-while [ -z ${ENDPOINTS} ]; do
+while [ -z "${ENDPOINTS}" ]; do
   echo "No endpoints retreived - retrying"
   ENDPOINTS=$(curl -s ${LINKED_CONTAINER_NAME}:${PORT} | grep li |awk -F '[<>]' '{print $5}')
+  echo "Retrieved endpoints: ${ENDPOINTS}"
   sleep 10
 done
 
