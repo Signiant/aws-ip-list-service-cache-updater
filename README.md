@@ -6,10 +6,8 @@ Designed to be used in a linked docker container model to keep the cache up to d
 
 # Usage
 
-The easiest way to run the tool is from docker (because docker rocks).  You will need to bind mount the AWS config file and pass in variables specific to the ECS service you want to affect
-
 ```bash
-docker pull signiant/monitor-ecs-service
+docker pull signiant/aws-ip-list-service-cache-updater
 ```
 
 This command below assumes you have first started the ip-ranges container and called it `ip-list` with the `--name` argument to docker
