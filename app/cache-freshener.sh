@@ -8,14 +8,16 @@ echo "Connecting to the IP list service on port ${PORT}"
 
 # Get the list of endpoints
 ENDPOINTS=$(curl -s ${LINKED_CONTAINER_NAME}:${PORT} | grep li |awk -F '[<>]' '{print $5}')
+echo "Retrieved endpoints: ${ENDPOINTS}"
 
 # write the base html file
 curl -s ${LINKED_CONTAINER_NAME}:${PORT} > /json/index.html
+echo "Wrote base HTML file"
 
 # Loop forever, sleeping for our frequency
 while true
 do
-  echo "Refreshing cache"
+  echo "Refreshing cache for endpoints...."
 
   for ENDPOINT in $ENDPOINTS
   do
