@@ -10,6 +10,12 @@ echo "Connecting to the IP list service on port ${PORT}"
 ENDPOINTS=$(curl -s ${LINKED_CONTAINER_NAME}:${PORT} | grep li |awk -F '[<>]' '{print $5}')
 echo "Retrieved endpoints: ${ENDPOINTS}"
 
+while [ -z ${ENDPOINTS} ]; do
+  echo "No endpoints retreived - retrying"
+  ENDPOINTS=$(curl -s ${LINKED_CONTAINER_NAME}:${PORT} | grep li |awk -F '[<>]' '{print $5}')
+  sleep 10
+done
+
 # write the base html file
 curl -s ${LINKED_CONTAINER_NAME}:${PORT} > /json/index.html
 echo "Wrote base HTML file"
@@ -24,7 +30,12 @@ do
     echo "processing endpoint ${ENDPOINT}"
     # curl -s -w "\nTimings: connect:%{time_connect} starttransfer:%{time_starttransfer} total:%{time_total}\n" ${LINKED_CONTAINER_NAME}:${PORT}/${ENDPOINT}
     curl -s ${LINKED_CONTAINER_NAME}:${PORT}/${ENDPOINT} > /json/${ENDPOINT}.tmp
-    mv /json/${ENDPOINT}.tmp /json/${ENDPOINT}
+
+    if [ -s "/json/${ENDPOINT}.tmp" ]; then
+      mv /json/${ENDPOINT}.tmp /json/${ENDPOINT}
+    else
+      echo "zero byte json file detected /json/${ENDPOINT}.tmp - not moving"
+    fi
   done
 
   sleep 30
