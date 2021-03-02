@@ -11,7 +11,7 @@ ENDPOINTS=$(curl -s ${LINKED_CONTAINER_NAME}:${PORT} | grep li |awk -F '[<>]' '{
 echo "Retrieved endpoints: ${ENDPOINTS}"
 
 while [ -z "${ENDPOINTS}" ]; do
-  echo "No endpoints retreived - retrying"
+  echo "No endpoints retrieved - retrying"
   ENDPOINTS=$(curl -s ${LINKED_CONTAINER_NAME}:${PORT} | grep li |awk -F '[<>]' '{print $5}')
   echo "Retrieved endpoints: ${ENDPOINTS}"
   sleep 10
@@ -20,6 +20,9 @@ done
 # write the base html file
 curl -s ${LINKED_CONTAINER_NAME}:${PORT} > /json/index.html
 echo "Wrote base HTML file"
+
+# Add the service-list endpoint to the list of things to update
+ENDPOINTS="${ENDPOINTS} service-list"
 
 # Loop forever, sleeping for our frequency
 while true
