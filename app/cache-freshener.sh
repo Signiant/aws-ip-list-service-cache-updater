@@ -42,7 +42,8 @@ do
     fi
   done
 
-  sleep 30
+  # Refresh every 5 minutes (300 seconds)
+  sleep 300
 done
 
 exit 0
