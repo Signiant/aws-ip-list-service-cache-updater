@@ -22,7 +22,7 @@ curl -s ${LINKED_CONTAINER_NAME}:${PORT} > /json/index.html
 echo "Wrote base HTML file"
 
 # Add the service-list endpoint to the list of things to update
-ENDPOINTS="${ENDPOINTS} service-list"
+ENDPOINTS="${ENDPOINTS} service-list all"
 
 # Loop forever, sleeping for our frequency
 while true
